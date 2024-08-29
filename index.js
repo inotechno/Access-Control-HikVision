@@ -170,7 +170,7 @@ eventEmitter.on("receivedLog", async (parsedEventLog) => {
 });
 
 // Endpoint untuk menangani multipart/form-data
-app.post("/access-control", upload.any(), async (req, res) => {
+app.post("/", upload.any(), async (req, res) => {
     try {
         let eventLog = req.body.event_log;
         console.log("Received event log:", eventLog);
@@ -203,7 +203,8 @@ app.post("/access-control", upload.any(), async (req, res) => {
     }
 });
 
+
 // Mulai server
-app.listen(7560, "192.168.20.165", () => {
-    console.log("Server started at 192.168.20.165:7560");
+app.listen(7560, "127.0.0.1", () => {
+    console.log("Server started at 127.0.0.1:7560");
 });
