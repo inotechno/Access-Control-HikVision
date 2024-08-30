@@ -2,10 +2,11 @@ import express from 'express';
 import multer from 'multer';
 import bodyParser from 'body-parser';
 import logger from './logger.js'; // Import logger dari log4js
-import connection from './db.js'; // Pastikan ini benar
+import { queryAsync } from './db.js'; // Import queryAsync dari db.js
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import EventEmitter from 'events';
+import moment from 'moment-timezone'; // Import moment-timezone
 
 // Inisialisasi aplikasi Express
 const app = express();
@@ -20,15 +21,10 @@ function generateRandomPassword(length = 12) {
   return crypto.randomBytes(length).toString("hex");
 }
 
-// Fungsi untuk menjalankan query database secara asynchronous
-const queryAsync = (sql, params) => {
-  return new Promise((resolve, reject) => {
-    connection.query(sql, params, (err, results) => {
-      if (err) reject(err);
-      else resolve(results);
-    });
-  });
-};
+// Fungsi untuk format waktu dengan timezone Asia/Jakarta
+function formatDateInJakarta(date) {
+  return moment(date).tz('Asia/Jakarta').format('YYYY-MM-DD HH:mm:ss');
+}
 
 // Listener untuk event 'receivedLog'
 eventEmitter.on("receivedLog", async (parsedEventLog) => {
@@ -38,13 +34,8 @@ eventEmitter.on("receivedLog", async (parsedEventLog) => {
     const eventData = parsedEventLog.AccessControllerEvent;
     const dateTime = new Date(parsedEventLog.dateTime);
 
-    // Format the date as 'YYYY-MM-DDTHH:mm:ss' in the original timezone
-    const offset = dateTime.getTimezoneOffset() * 60000; // Get the timezone offset in milliseconds
-    const localISOTime = new Date(dateTime.getTime() - offset)
-      .toISOString()
-      .slice(0, 19);
-
-    const timestamp = localISOTime.replace("T", " ");
+    // Format the date as 'YYYY-MM-DD HH:mm:ss' in the Asia/Jakarta timezone
+    const timestamp = formatDateInJakarta(dateTime);
 
     const siteId = 1;
     const siteLongitude = "106.798818";

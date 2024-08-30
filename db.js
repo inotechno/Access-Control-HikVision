@@ -1,20 +1,22 @@
-// db.js
 import mysql from 'mysql2';
 
-const connection = mysql.createConnection({
+// Buat pool koneksi
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ems_new'
+  database: 'ems_new',
+  connectionLimit: 10 // Atur jumlah maksimum koneksi di pool
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Database connection error:', err);
-    process.exit(1);
-  }
-  
-  console.log('Database connected');
-});
+// Buat fungsi queryAsync untuk menggunakan pool
+const queryAsync = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, params, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+};
 
-export default connection;
+export { pool, queryAsync };
