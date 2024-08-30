@@ -14,6 +14,11 @@
             "date": 1724378246198,
             "name": "logs\\access-control-2024-08-23.log",
             "hash": "afd92db9b2f77635b82180000479e56d797d7a6978a1ca972fd35c0e394f2775"
+        },
+        {
+            "date": 1724903812697,
+            "name": "logs\\access-control-2024-08-29.log",
+            "hash": "2635d620e114fd084db82f237be9106a6171b6e56096354fb9fd050f8195166b"
         }
     ],
     "hashType": "sha256"
