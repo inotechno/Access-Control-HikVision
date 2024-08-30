@@ -1,0 +1,16 @@
+{
+    "keepSettings": {
+        "type": 2,
+        "amount": 10
+    },
+    "auditFilename": "D:\\PROJECT TONI\\access-control-app/audit.json",
+    "hashType": "md5",
+    "extension": ".log",
+    "files": [
+        {
+            "date": 1724997221456,
+            "name": "D:\\PROJECT TONI\\access-control-app/File-2024-08-30.0.log",
+            "hash": "795541588a66e95849a7e5a6cf2c3718"
+        }
+    ]
+}

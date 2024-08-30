@@ -32,7 +32,7 @@ const queryAsync = (sql, params) => {
 
 // Listener untuk event 'receivedLog'
 eventEmitter.on("receivedLog", async (parsedEventLog) => {
-  logger.info("Received log:", parsedEventLog);
+  console.log("Received log:", parsedEventLog);
   try {
     const ipAddress = parsedEventLog.ipAddress;
     const eventData = parsedEventLog.AccessControllerEvent;
@@ -203,7 +203,7 @@ app.post("/", upload.any(), async (req, res) => {
 });
 
 const port = 7650;
-const host = "127.0.0.1";
+const host = "192.168.20.165";
 
 // Mulai server
 const server = app.listen(port, host, () => {
