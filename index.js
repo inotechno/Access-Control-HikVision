@@ -203,7 +203,7 @@ app.post("/", upload.any(), async (req, res) => {
 });
 
 const port = 7650;
-const host = "192.168.20.165";
+const host = "127.0.0.1";
 
 // Mulai server
 const server = app.listen(port, host, () => {
