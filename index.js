@@ -41,6 +41,17 @@ eventEmitter.on("receivedLog", async (parsedEventLog) => {
     const siteLongitude = "106.798818";
     const siteLatitude = "-6.263122";
 
+    const siteResults = await queryAsync(
+      "SELECT * FROM sites WHERE id = ?",
+      [siteId]
+    );
+
+    const site = siteResults[0];
+    if (!site) {
+      logger.error("Site with ID " + siteId + " not found");
+      return;
+    }
+
     const machineResults = await queryAsync(
       "SELECT * FROM machines WHERE ip_address = ? and is_active = ?",
       [ipAddress, 1]
@@ -139,7 +150,7 @@ eventEmitter.on("receivedLog", async (parsedEventLog) => {
           employeeId,
           machine.id,
           1,
-          siteId,
+          site.id,
           timestamp,
           siteLongitude,
           siteLatitude,
