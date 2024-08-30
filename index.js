@@ -1,11 +1,11 @@
-import express from "express";
-import multer from "multer";
-import bodyParser from "body-parser";
-import logger from "./logger.js";
-import connection from "./db.js"; // Pastikan ini benar
-import crypto from "crypto";
-import bcrypt from "bcrypt";
-import EventEmitter from "events";
+import express from 'express';
+import multer from 'multer';
+import bodyParser from 'body-parser';
+import logger from './logger.js'; // Import logger dari log4js
+import connection from './db.js'; // Pastikan ini benar
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
+import EventEmitter from 'events';
 
 // Inisialisasi aplikasi Express
 const app = express();
@@ -32,7 +32,7 @@ const queryAsync = (sql, params) => {
 
 // Listener untuk event 'receivedLog'
 eventEmitter.on("receivedLog", async (parsedEventLog) => {
-  console.log("Received log:", parsedEventLog);
+  logger.info("Received log:", parsedEventLog);
   try {
     const ipAddress = parsedEventLog.ipAddress;
     const eventData = parsedEventLog.AccessControllerEvent;
@@ -179,7 +179,7 @@ app.get("/", (req, res) => {
 app.post("/", upload.any(), async (req, res) => {
   try {
     let eventLog = req.body.event_log;
-    console.log("Received event log:", eventLog);
+    logger.info("Received event log:", eventLog);
 
     if (!eventLog) {
       return res.status(400).json({ error: "Event log is missing" });
@@ -197,6 +197,7 @@ app.post("/", upload.any(), async (req, res) => {
     eventEmitter.emit("receivedLog", parsedEventLog);
     res.json({ status: "Event received and processing started" });
   } catch (error) {
+    logger.error("Internal server error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -206,9 +207,9 @@ const host = "127.0.0.1";
 
 // Mulai server
 const server = app.listen(port, host, () => {
-  console.log("Server started at http://" + host + ":" + port);
+  logger.info("Server started at http://" + host + ":" + port);
 });
 
 server.on('error', (err) => {
-  console.error(`Server error: ${err.message}`);
+  logger.error(`Server error: ${err.message}`);
 });
