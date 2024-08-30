@@ -205,6 +205,10 @@ const port = 7650;
 const host = "127.0.0.1";
 
 // Mulai server
-app.listen(port, host, () => {
+const server = app.listen(port, host, () => {
   console.log("Server started at http://" + host + ":" + port);
+});
+
+server.on('error', (err) => {
+  console.error(`Server error: ${err.message}`);
 });
