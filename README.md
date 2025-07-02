@@ -106,6 +106,9 @@ curl -X POST http://127.0.0.1:7650 \
   }"
 ```
 
+### Screenshot
+![image](https://github.com/user-attachments/assets/60fec7e7-ab28-4cf8-adf9-188d9f71b6d0)
+
 ## 📬 Kontak
 
 - Email: 2ahmadfatoni0@gmail.com
