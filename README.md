@@ -88,7 +88,7 @@ node app.js
 Server berjalan di:
 ```
 
-```cpp
+```bash
 http://127.0.0.1:7650
 ```
 
